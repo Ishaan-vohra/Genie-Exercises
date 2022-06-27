@@ -14,7 +14,10 @@ void exercise9b(){
 
 //open file and create 1D histogram
 
-	auto myHist = new TH1D("hist","title;x-axistitle;y-axistitle]",100,35,45);
+	//auto myHist = new TH1D("hist","Gamma Energy;Energy;Count",100,0,1.5);
+	//auto myHist = new TH1D("hist","Recoil Energy;Energy;Count",100,37.2,37.4);
+	auto myHist = new TH1D("hist","Initial Neutrino Energy;Energy;Count",100,0,5);
+	//auto myHist = new TH1D("hist","Final Neutrino Energy;Energy;Count",100,0,5);
 
 	TFile *myFile = TFile::Open("/Users/ishaanvohra/Desktop/Neutrino/numu_on_argon.gst.root");
 
@@ -102,15 +105,25 @@ void exercise9b(){
 												//Must use -beta instead of beta because of weird formula 
 
 
-//boost vectors to COM frame
+//boost v_tot to check we are in COM (if v_tot's vector part = 0)
 	v_tot.Boost(beta); 
+
+//boost other vectors
 	v_gamma.Boost(beta); 
 	v_recoil.Boost(beta); 
 	v_nui.Boost(beta);
 	v_nuf.Boost(beta);
 
+	 //Fill histogram
 
-	myHist->Fill(v_tot.E()); //Fill histogram
+	// myHist->Fill(v_gamma.E());
+
+	// myHist->Fill(v_recoil.E());
+
+	 myHist->Fill(v_nui.E());
+
+	// myHist->Fill(v_nuf.E());
+
 
 	}
 
