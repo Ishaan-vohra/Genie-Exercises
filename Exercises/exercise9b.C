@@ -10,11 +10,13 @@
 #include "TVector3.h"
 #include "TLorentzVector.h"
 
-void exercise9(){
+void exercise9b(){
 
-//open file
+//open file and create 1D histogram
 
-	TFile *myFile = TFile::Open("numu_on_argon.gst.root");
+	auto myHist = new TH1D("hist","title;x-axistitle;y-axistitle]",100,35,45);
+
+	TFile *myFile = TFile::Open("/Users/ishaanvohra/Desktop/Neutrino/numu_on_argon.gst.root");
 
 //use Ttree reader to find 
 // pxv, pyv, pzv, --> neutrino initial momentum vector
@@ -99,15 +101,20 @@ void exercise9(){
 	TVector3 beta = -(1/E_tot*(v_tot.Vect())); //beta is 1/E * 3-vector component of v_tot (which itself is the total momentum 3-vector)
 												//Must use -beta instead of beta because of weird formula 
 
-//	TVector3 v_tot_prime;
-	v_tot.Boost(beta); //v_tot_prime is represents (total_momentum_x', total_momentum_y', total_momentum_z'), which is the momenutum vector transformed to COM frame
+
+//boost vectors to COM frame
+	v_tot.Boost(beta); 
+	v_gamma.Boost(beta); 
+	v_recoil.Boost(beta); 
+	v_nui.Boost(beta);
+	v_nuf.Boost(beta);
 
 
-	cout << v_tot.X() << endl;
-	cout << v_tot.Y() << endl;
-	cout << v_tot.Z() << endl;
+	myHist->Fill(v_tot.E()); //Fill histogram
 
 	}
+
+	myHist->Draw();
 
 }
 
