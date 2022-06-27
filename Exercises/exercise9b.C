@@ -110,7 +110,7 @@ void exercise9b(){
 	v_nuf.Boost(beta);
 
 
-	myHist->Fill(v_tot.E()); //Fill histogram
+	myHist->Fill(v_gamma.E()); //Fill histogram
 
 	}
 
